@@ -1,6 +1,14 @@
 # Intro to React Redux
 ## Contents
 
+## What is Redux?
+Redux solves the issue of moving data all over your application. React is set up so that only childeren files can grab data from parents. This makes getting data from one low level page to another low level page very difficult. Redux is a way to pass the data directly to components without needing to be the parent; it is totally separate from the regular component tree.
+
+### Redux Terms
+- Redux State: This is similar to the React State, but has to do with Redux instead.
+- Store: The big object that will hold all the information for the application.
+- Reducer: A function that runs everytime a function is dispatched.
+
 ## Requirements
 - npm
 - react CLI commands
@@ -20,9 +28,24 @@ From here you should clean out the code that comes with the create command. Move
 
 Should be everything.
 
-## What is Redux?
-Redux solves the issue of moving data all over your application. React is set up so that only childeren files can grab data from parents. This makes getting data from one low level page to another low level page very difficult. Redux is a way to pass the data directly to components without needing to be the parent; it is totally separate from the regular component tree.
+## Providing the Store with Redux
+In your index.js you need:
+```
+import { createStore } from 'redux';
 
-### Redux Terms
-- Redux State: This is similar to the React State, but has to do with Redux instead.
-- Store: This is where we go to get the information that needs to be passed along.
+// This is creating the store.
+const storeInstance = createStore(
+    // This function is our first reducer.
+    () => {
+        console.log('Reducer Test!');
+    },
+);
+```
+Run it! It puts the thing in the console, yay.
+
+Now import `Provider` from `'react-redux'` using deconstruction. Then we'll use Provider as a wrapper for the `<App />` in the render. This will cause all kinds of problems! To fix those problems we need to send our Provider tag some props in the form of `store={storeInstance}` this will give the entire app access to the store.
+
+I say again: "This is how we **provide** the **store** to our react application." Got it? Great.
+
+## Connecting the Store to App.js
+We need to import a thing. Import `conect` from `react-redux`. Then we need to change that `export default` a bit. To add connect to it we need to do `connect()(App)`. This is currying from before, why is it here? To bind properly.
