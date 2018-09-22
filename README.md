@@ -93,3 +93,98 @@ Make a third reducer! This reducer will take in state and action. Console log ac
 
 Hint: Use what has been built already.
 
+It comes from the type in the App.js! We can use this to fire specific reducers when we want them using an if function. Now that the reducers are separate and fire when the appropriate button is clicked, let's add some stuff!
+
+### Variables in the Reducer
+Let's create an input that when clicked will take in a string and console log it. You're going to have to add the property `payload` to the object where `type` is. The `payload` will be the string we want to `console.log` with the third reducer. If you're guessing how the reducer gets the payload just check your console. It comes right over with the type!
+
+You should have all the tools to create this at this point if you've been through the ReactJS tutorial.
+
+App.js
+```
+import React, { Component } from 'react';
+import './App.css';
+import { connect } from 'react-redux';
+
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      newElement: '',
+    };
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      newElement: event.target.value,
+    });
+  }
+
+  handleClick = () => {
+    this.props.dispatch({type: 'ADD_ELEMENT', payload: this.state.newElement});
+    this.setState({
+      newElement: '',
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.props.dispatch({type: 'BUTTON_ONE'})}>Button One</button>
+        <button onClick={() => this.props.dispatch({type: 'BUTTON_TWO'})}>Button Two</button>
+        <input value={this.state.newElement} onChange={this.handleChange}/>
+        <button onClick={this.handleClick}>Add Element</button>
+      </div>
+    );
+  }
+}
+
+export default connect()(App);
+```
+
+index.js
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './Components/App/App.js';
+import registerServiceWorker from './registerServiceWorker';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+
+const firstReducer = (state, action) => {
+    if(action.type === 'BUTTON_ONE'){
+        console.log('Button #1');
+    }
+    return {};
+};
+
+const secondReducer = (state, action) => {
+    if(action.type === 'BUTTON_TWO'){
+        console.log('Button #2');
+    }
+    return {};
+};
+
+const elementListReducer = (state, action) => {
+    if(action.type === 'ADD_ELEMENT'){
+        console.log('Element:', action.payload);
+    }
+    return {};
+};
+
+const storeInstance = createStore(
+    combineReducers({
+        firstReducer,
+        secondReducer,
+        elementListReducer,
+    })
+);
+
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
+registerServiceWorker();
+```
+
+For following along's sake, this is where you should be. We're moving elements.
+
+Reducers 1 and 2 along with buttons 1 and 2 are pretty useless right now, but they've not yet been deleted so there they will remain.
