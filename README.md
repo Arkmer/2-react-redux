@@ -93,7 +93,7 @@ Make a third reducer! This reducer will take in state and action. Console log ac
 
 Hint: Use what has been built already.
 
-It comes from the type in the App.js! We can use this to fire specific reducers when we want them using an if function. Now that the reducers are separate and fire when the appropriate button is clicked, let's add some stuff!
+It comes from the type in the App.js! We can use this to fire specific reducers when we want them using switch statements. Now that the reducers are separate and fire when the appropriate button is clicked, let's add some stuff!
 
 ### Variables in the Reducer
 Let's create an input that when clicked will take in a string and console log it. You're going to have to add the property `payload` to the object where `type` is. The `payload` will be the string we want to `console.log` with the third reducer. If you're guessing how the reducer gets the payload just check your console. It comes right over with the type!
@@ -153,24 +153,28 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 const firstReducer = (state, action) => {
-    if(action.type === 'BUTTON_ONE'){
-        console.log('Button #1');
+    switch(action.type){
+        case 'BUTTON_ONE'
+            console.log('Button #1');
+        default:
+            return {};
     }
-    return {};
 };
 
 const secondReducer = (state, action) => {
-    if(action.type === 'BUTTON_TWO'){
-        console.log('Button #2');
-    }
-    return {};
+    switch(action.type){
+        case 'BUTTON_TWO'
+            console.log('Button #2');
+        default:
+            return {};
 };
 
 const elementListReducer = (state, action) => {
-    if(action.type === 'ADD_ELEMENT'){
-        console.log('Element:', action.payload);
-    }
-    return {};
+    switch(action.type){
+        case 'ADD_ELEMENT'
+            console.log('Element:', action.payload);
+        default:
+            return {};
 };
 
 const storeInstance = createStore(
@@ -201,3 +205,22 @@ Add the same things to the second reducer except instead of adding you are subtr
 
 From this small change you can see that each state is unique to the reducer! Additionally, we can see that the state that is passed in is the state from the previous time that state was called. Adding the `= 0` to the state input is ES6 for "if this is unidentified, it equals this".
 
+### Storing things in the Redux State
+Because we now know how the state works in redux we want to try to store things there so we can use them in our app later!
+
+See if you can figure out how to do that!
+
+Hint: Sort of like `setState` but without the `setState`.
+
+index.js reducer answer
+```
+const elementListReducer = (state = [], action) => {
+    switch(action.type){
+        case 'ADD_ELEMENT':
+            return [...state, action.payload]
+        default:
+            return state;
+    }
+};
+```
+If there is nothing in the state then state is an empty array. If something is in the state then the state is returned with whatever the payload was tagged onto it.
