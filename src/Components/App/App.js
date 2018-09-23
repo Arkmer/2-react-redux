@@ -30,9 +30,14 @@ class App extends Component {
         <button onClick={() => this.props.dispatch({type: 'BUTTON_TWO'})}>Button Two</button>
         <input value={this.state.newElement} onChange={this.handleChange}/>
         <button onClick={this.handleClick}>Add Element</button>
+        <pre>{JSON.stringify(this.props.reduxState)}</pre>
       </div>
     );
   }
 }
 
-export default connect()(App);
+const mapReducStateToProps = reduxState => ({
+  reduxState
+});
+
+export default connect(mapReducStateToProps)(App);

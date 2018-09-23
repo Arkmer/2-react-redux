@@ -188,3 +188,16 @@ registerServiceWorker();
 For following along's sake, this is where you should be. We're moving elements.
 
 Reducers 1 and 2 along with buttons 1 and 2 are pretty useless right now, but they've not yet been deleted so there they will remain.
+
+## State
+Slight deviation, we're going to talk about state now. We've been passing it into our reducers and basically just ignoring it. Let's take some steps here. Do these in reducer 1.
+1. Console log it. Result?
+2. Return it instead of the empty object. Result?
+Okay, surely you got some resuts from both those actions. First you got undefined, then you got a crap ton of errors! Okay, the errors are because the state is undefined. Add `= 0` to the state that is being passed into the reducer so it looks like this `const firstReducer = (state = 0, action)`, errors resolved.
+
+Now, inside the if function, add a new line `return state + 1;`.
+
+Add the same things to the second reducer except instead of adding you are subtracting. What do you think the result will be?
+
+From this small change you can see that each state is unique to the reducer! Additionally, we can see that the state that is passed in is the state from the previous time that state was called. Adding the `= 0` to the state input is ES6 for "if this is unidentified, it equals this".
+
