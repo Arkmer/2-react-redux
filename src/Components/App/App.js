@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 class App extends Component {
   constructor(props){
@@ -17,6 +18,24 @@ class App extends Component {
   }
 
   handleClick = () => {
+    axios.post('/element', this.state) // POST
+    .then(() => {
+      axios.get('/element') // GET
+      .then(response => {
+        this.props.dispatch({ // Set State
+          type: 'SET_ELEMENTS',
+          payload: response.data
+        })
+      })
+      .catch(error => {
+        console.log('GET', error);
+      })
+    })
+    .catch(error => {
+      console.log('POST', error);
+    })
+
+    // set state to get request response
     this.props.dispatch({type: 'ADD_ELEMENT', payload: this.state.newElement});
     this.setState({
       newElement: '',
