@@ -60,3 +60,5 @@ const mapReducStateToProps = reduxState => ({
 });
 
 export default connect(mapReducStateToProps)(App);
+
+// Bacon!!
